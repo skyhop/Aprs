@@ -52,8 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\AprsConfigSection.cs" />
-    <Compile Include="Config\AprsTrackerConfig.cs" />
-    <Compile Include="Config\MapLocationConfig.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums\AltitudeUnit.cs" />
     <Compile Include="Enums\DataType.cs" />
