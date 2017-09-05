@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using Boerman.Aeronautics.AprsClient.Enums;
 
 namespace Boerman.Aeronautics.AprsClient.Models
@@ -37,24 +38,33 @@ namespace Boerman.Aeronautics.AprsClient.Models
          */
         public override string ToString()
         {
+			int padding = 17;
             var sb = new StringBuilder();
-            sb.Append($"Packet Information Received {ReceivedDate} UTC\n");
-            sb.Append($"        Callsign: {Callsign}\n");
-            sb.Append($"   Station Route: {string.Join(", ", StationRoute)}\n");
-            sb.Append($"        DataType: {DataType}\n");
-            sb.Append($"        Latitude: {Latitude}\n");
-            sb.Append($"       Longitude: {Longitude}\n");
-            sb.Append($"        Altitude: {Altitude}\n");
-            sb.Append($"          Course: {Direction}\n");
-            sb.Append($"           Speed: {Speed}\n");
-            sb.Append($"    Symbol Table: {SymbolTable}\n");
-            sb.Append($"          Symbol: {Symbol}\n");
+            
+            sb.AppendLine($"Packet Information Received {ReceivedDate} UTC");
+            sb.AppendLine($"{(nameof(Callsign).SplitCamelCase().PadLeft(padding))}: {Callsign}");
+            sb.AppendLine($"{(nameof(StationRoute).SplitCamelCase().PadLeft(padding))}: {string.Join(", ", StationRoute)}");
+            sb.AppendLine($"{(nameof(DataType).SplitCamelCase().PadLeft(padding))}: {DataType}");
+            sb.AppendLine($"{(nameof(Latitude).SplitCamelCase().PadLeft(padding))}: {Latitude}");
+            sb.AppendLine($"{(nameof(Longitude).SplitCamelCase().PadLeft(padding))}: {Longitude}");
+            sb.AppendLine($"{(nameof(Altitude).SplitCamelCase().PadLeft(padding))}: {Altitude}");
+            sb.AppendLine($"{(nameof(Direction).SplitCamelCase().PadLeft(padding))}: {Direction}");
+            sb.AppendLine($"{(nameof(Speed).SplitCamelCase().PadLeft(padding))}: {Speed}");
+            sb.AppendLine($"{(nameof(SymbolTable).SplitCamelCase().PadLeft(padding))}: {SymbolTable}");
+            sb.AppendLine($"{(nameof(Symbol).SplitCamelCase().PadLeft(padding))}: {Symbol}");
 
             if (DataType == DataType.CurrentMicE)
-                sb.Append($"   Mic E Message: {MicEMessageType}\n");
-
+                sb.AppendLine($"(nameof(MicEMessageType).SplitCamelCase().PadLeft(padding))}: {MicEMessageType}");
 
             return sb.ToString();
+        }
+    }
+    
+    static class SplitCamelCaseExtension
+    {
+        public static string SplitCamelCase(this string str)
+        {
+            return Regex.Replace( Regex.Replace( str, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2" ), @"(\p{Ll})(\P{Ll})", "$1 $2" );
         }
     }
 }
