@@ -21,6 +21,10 @@ The library is available for download on [NuGet](https://www.nuget.org/packages/
 
 Before starting your application please be sure you added the required configuration in the `App.Config` file:
 
+    <configSections>
+        <section name="AprsConfig" type="Boerman.Aeronautics.AprsClient.Config.AprsConfig,Boerman.Aeronautics.AprsClient" />
+    </configSections>
+    
     <AprsConfig uri="aprs.glidernet.org" port="14580" password="-1" filter="t/poimqstunw"></AprsConfig>
 
 For more information about the possible configuration check out [Config/AprsConfigSection.cs](Config/AprsConfigSection.cs).
@@ -46,3 +50,4 @@ To only receive the raw messages without any parsing you can use the `DataReceiv
         // Do some work...
     };
 
+*A command line tool which shows how to use this library is available at [https://github.com/CorstianBoerman/AprsClient-Example](https://github.com/CorstianBoerman/AprsClient-Example)*
