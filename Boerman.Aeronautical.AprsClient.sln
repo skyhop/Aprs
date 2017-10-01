@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 15.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boerman.Aeronautical.AprsClient", "Boerman.Aeronautical.AprsClient.csproj", "{C386CCFE-4694-4FB5-85AA-9760E1372D58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C386CCFE-4694-4FB5-85AA-9760E1372D58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C386CCFE-4694-4FB5-85AA-9760E1372D58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C386CCFE-4694-4FB5-85AA-9760E1372D58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C386CCFE-4694-4FB5-85AA-9760E1372D58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
