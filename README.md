@@ -32,7 +32,7 @@ Configuration of this library happens through a config file. Please create a fil
       }
     }
 
-For more information about the possible configuration check out [AprsConfig.cs](AprsConfig.cs).
+For more information about the possible configuration check out [AprsConfig.cs](Boerman.Aeronautics.AprsClient/AprsConfig.cs).
 
 
 ## Using the library
