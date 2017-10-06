@@ -23,22 +23,20 @@ namespace Boerman.Aeronautics.AprsClient
             ReconnectOnDisconnect = true
         })
         {
-            base.OnConnect +=
-                (sender, args) =>
+            base.Connected += (sender, args) => 
                 {
                     Send($"user {AprsConfig.Callsign} pass {AprsConfig.Password} vers experimenting 0.1 filter {AprsConfig.Filter}\n");
                 };
 
-            base.OnReceive += OnReceive;
-            
+            base.DataReceived += OnDataReceived;            
             Open();
         }
 
-        private void OnReceive(object sender, OnReceiveEventArgs<string> onReceiveEventArgs)
+        private void OnDataReceived(object sender, DataReceivedEventArgs<string> dataReceivedEventArgs)
         {
-            if (String.IsNullOrEmpty(onReceiveEventArgs.Data)) return;
+            if (String.IsNullOrEmpty(dataReceivedEventArgs.Data)) return;
 
-            DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(onReceiveEventArgs.Data));
+            DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(dataReceivedEventArgs.Data));
 
             if (PacketReceived == null) return;
 
@@ -46,7 +44,7 @@ namespace Boerman.Aeronautics.AprsClient
 
             try
             {
-                packetInfo = PacketInfo.Parse(onReceiveEventArgs.Data);
+                packetInfo = PacketInfo.Parse(dataReceivedEventArgs.Data);
             }
             catch (Exception ex)
             {
