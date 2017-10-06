@@ -7,6 +7,7 @@
     <Company>the Boerman Company</Company>
     <Description>This is an APRS client. The APRS protocol allows for broadcasting position updates to subscribers.</Description>
     <Copyright>Copyright (C) Corstian Boerman 2017</Copyright>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
