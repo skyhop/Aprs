@@ -19,15 +19,20 @@ The library is available for download on [NuGet](https://www.nuget.org/packages/
 
 ## Configuring the library
 
-Before starting your application please be sure you added the required configuration in the `App.Config` file:
+Configuration of this library happens through a config file. Please create a file named `appconfig.json` in the root of your project and set it to copy to your build output. Configuration in the JSON file goes as follows:
 
-    <configSections>
-        <section name="AprsConfig" type="Boerman.Aeronautics.AprsClient.Config.AprsConfig,Boerman.Aeronautics.AprsClient" />
-    </configSections>
-    
-    <AprsConfig uri="aprs.glidernet.org" port="14580" password="-1" filter="t/poimqstunw"></AprsConfig>
+    {
+      "aprsClient": {
+        "uri": "aprs.glidernet.org",
+        "port": "14580",
+        "callsign": "0",
+        "password": "-1",
+        "filter": "t/poimqstunw",
+        "useOgnAdditives": "true"
+      }
+    }
 
-For more information about the possible configuration check out [Config/AprsConfigSection.cs](Config/AprsConfigSection.cs).
+For more information about the possible configuration check out [AprsConfig.cs](AprsConfig.cs).
 
 
 ## Using the library
