@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Corstian Boerman</Authors>
+    <Company>the Boerman Company</Company>
+    <Description>This is an APRS client. The APRS protocol allows for broadcasting position updates to subscribers.</Description>
+    <Copyright>Copyright (C) Corstian Boerman 2017</Copyright>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Boerman.TcpLib" Version="1.0.2.90" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
-  </ItemGroup>
 </Project>
