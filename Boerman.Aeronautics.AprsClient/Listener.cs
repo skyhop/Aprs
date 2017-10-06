@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Net;
 using Boerman.Aeronautics.AprsClient.Models;
 using Boerman.TcpLib.Client;
+using Boerman.TcpLib.Shared;
 
 namespace Boerman.Aeronautics.AprsClient
 {
@@ -22,23 +23,22 @@ namespace Boerman.Aeronautics.AprsClient
             ReconnectOnDisconnect = true
         })
         {
-            base.OnConnect += (sender, args) => OnConnect();
-            base.OnReceive += (sender, args) => OnReceive(args.Data);
+            base.OnConnect +=
+                (sender, args) =>
+                {
+                    Send($"user {AprsConfig.Callsign} pass {AprsConfig.Password} vers experimenting 0.1 filter {AprsConfig.Filter}\n");
+                };
+
+            base.OnReceive += OnReceive;
             
             Open();
         }
 
-        private void OnConnect()
+        private void OnReceive(object sender, OnReceiveEventArgs<string> onReceiveEventArgs)
         {
-            Send(
-                $"user {AprsConfig.Callsign} pass {AprsConfig.Password} vers experimenting 0.1 filter {AprsConfig.Filter}\n");
-        }
+            if (String.IsNullOrEmpty(onReceiveEventArgs.Data)) return;
 
-        private void OnReceive(string data)
-        {
-            if (String.IsNullOrEmpty(data)) return;
-
-            DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(data));
+            DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(onReceiveEventArgs.Data));
 
             if (PacketReceived == null) return;
 
@@ -46,7 +46,7 @@ namespace Boerman.Aeronautics.AprsClient
 
             try
             {
-                packetInfo = PacketInfo.Parse(data);
+                packetInfo = PacketInfo.Parse(onReceiveEventArgs.Data);
             }
             catch (Exception ex)
             {
