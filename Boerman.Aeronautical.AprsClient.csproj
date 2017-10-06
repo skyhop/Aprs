@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Corstian Boerman</Authors>
+    <Company>the Boerman Company</Company>
+    <Description>This is an APRS client. The APRS protocol allows for broadcasting position updates to subscribers.</Description>
+    <Copyright>Copyright (C) Corstian Boerman 2017</Copyright>
+  </PropertyGroup>
+
+</Project>

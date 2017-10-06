@@ -51,33 +51,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\AprsConfigSection.cs" />
+    <Compile Include="AprsConfig.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Enums\AltitudeUnit.cs" />
     <Compile Include="Enums\DataType.cs" />
-    <Compile Include="Enums\LatitudeHemisphere.cs" />
-    <Compile Include="Enums\LongitudeHemisphere.cs" />
     <Compile Include="Enums\MicEMessageType.cs" />
-    <Compile Include="Enums\PositionSign.cs" />
     <Compile Include="Enums\Symbol.cs" />
     <Compile Include="Enums\SymbolTable.cs" />
     <Compile Include="Listener.cs" />
-    <Compile Include="Models\Altitude.cs" />
     <Compile Include="Models\AprsDataReceivedEventArgs.cs" />
     <Compile Include="Models\AprsMessage.cs" />
-    <Compile Include="Models\Heading.cs" />
-    <Compile Include="Models\Latitude.cs" />
-    <Compile Include="Models\LatitudeLongitudeBase.cs" />
-    <Compile Include="Models\Longitude.cs" />
     <Compile Include="Models\OgnAprsMessage.cs" />
     <Compile Include="Models\PacketInfo.cs" />
     <Compile Include="Models\PacketInfoEventArgs.cs" />
-    <Compile Include="Models\Speed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Boerman.Aeronautics.AprsClient.nuspec" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

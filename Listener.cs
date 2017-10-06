@@ -5,7 +5,6 @@
 using System;
 using System.Diagnostics;
 using System.Net;
-using Boerman.Aeronautics.AprsClient.Config;
 using Boerman.Aeronautics.AprsClient.Models;
 using Boerman.TcpLib.Client;
 
@@ -16,8 +15,8 @@ namespace Boerman.Aeronautics.AprsClient
         public Listener() : base(new ClientSettings()
         {
             EndPoint = new DnsEndPoint(
-                    AprsConfig.GetConfig().Uri,
-                    AprsConfig.GetConfig().Port),
+                    AprsConfig.Uri,
+                    AprsConfig.Port),
             Listening = false,
             Splitter = "\r\n",
             Timeout = 1020000, // 17 minutes afaik,
@@ -34,7 +33,7 @@ namespace Boerman.Aeronautics.AprsClient
         private void OnConnect()
         {
             Send(
-                $"user {AprsConfig.GetConfig().Callsign} pass {AprsConfig.GetConfig().Password} vers experimenting 0.1 filter {AprsConfig.GetConfig().Filter}\n");
+                $"user {AprsConfig.Callsign} pass {AprsConfig.Password} vers experimenting 0.1 filter {AprsConfig.Filter}\n");
         }
 
         private void OnReceive(string data)
