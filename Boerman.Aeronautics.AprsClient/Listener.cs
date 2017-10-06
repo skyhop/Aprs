@@ -10,24 +10,22 @@ using Boerman.TcpLib.Client;
 
 namespace Boerman.Aeronautics.AprsClient
 {
-    public class Listener : TcpClient<string, string>
+    public class Listener : TcpClient
     {
         public Listener() : base(new ClientSettings()
         {
             EndPoint = new DnsEndPoint(
                     AprsConfig.Uri,
                     AprsConfig.Port),
-            Listening = false,
             Splitter = "\r\n",
             Timeout = 1020000, // 17 minutes afaik,
             ReconnectOnDisconnect = true
         })
         {
-            // Set the callbacks before starting the client
-            ConnectEvent += OnConnect;
-            ReceiveEvent += OnReceive;
+            base.OnConnect += (sender, args) => OnConnect();
+            base.OnReceive += (sender, args) => OnReceive(args.Data);
             
-            Start();
+            Open();
         }
 
         private void OnConnect()

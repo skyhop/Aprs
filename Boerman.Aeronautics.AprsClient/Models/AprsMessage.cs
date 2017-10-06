@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using Boerman.Aeronautics.AprsClient.Enums;
+using Boerman.Core.Spatial;
 
 namespace Boerman.Aeronautics.AprsClient.Models
 {
@@ -38,7 +39,7 @@ namespace Boerman.Aeronautics.AprsClient.Models
          */
         public override string ToString()
         {
-			int padding = 17;
+            int padding = 17;
             var sb = new StringBuilder();
             
             sb.AppendLine($"Packet Information Received {ReceivedDate} UTC");
@@ -54,7 +55,7 @@ namespace Boerman.Aeronautics.AprsClient.Models
             sb.AppendLine($"{(nameof(Symbol).SplitCamelCase().PadLeft(padding))}: {Symbol}");
 
             if (DataType == DataType.CurrentMicE)
-                sb.AppendLine($"(nameof(MicEMessageType).SplitCamelCase().PadLeft(padding))}: {MicEMessageType}");
+                sb.AppendLine($"{(nameof(MicEMessageType).SplitCamelCase().PadLeft(padding))}: {MicEMessageType}");
 
             return sb.ToString();
         }

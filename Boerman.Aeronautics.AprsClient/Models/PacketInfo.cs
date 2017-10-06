@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Boerman.Aeronautics.AprsClient.Enums;
+using Boerman.Core.Spatial;
 
 namespace Boerman.Aeronautics.AprsClient.Models
 {
