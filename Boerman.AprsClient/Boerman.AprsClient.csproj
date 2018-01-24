@@ -18,6 +18,7 @@
 This version uses the updated .NET Standard 2.0 version of the Boerman.Networking library</PackageReleaseNotes>
     <Summary>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Summary>
     <PackageTags>aprs client tcp boerman library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/25320889</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
