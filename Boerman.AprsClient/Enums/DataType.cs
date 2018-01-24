@@ -1,0 +1,31 @@
+﻿namespace Boerman.AprsClient.Enums
+{
+    public enum DataType
+    {
+        CurrentMicERev0,
+        OldMicERev0,
+        PositionWithoutTimestampNoAprsMessaging,
+        PeetBrosUiiWxStation,
+        RawGpsDataOrUltimeter2000,
+        AgreloDfJrMicroFinder,
+        OldMicE,
+        Item,
+        ShelterDataWithTime,
+        InvalidOrTestData,
+        SpaceWeather,
+        PositionWithTimestampNoAprsMessaging,
+        Message,
+        Object,
+        StationCapabilities,
+        PositionWithoutTimestampWithAprsMessaging,
+        Status,
+        Query,
+        PositionWithTimestampWithAprsMessaging,
+        TelemetryData,
+        MaidenheadGridLocatorBeacon,
+        WeatherReportWithoutPosition,
+        CurrentMicE,
+        UserDefinedAprsPacketFormat,
+        ThirdPartyTraffic
+    }
+}

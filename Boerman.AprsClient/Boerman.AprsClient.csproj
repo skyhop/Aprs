@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Corstian Boerman</Authors>
+    <Company>the Boerman Company</Company>
+    <Description>This is an APRS client. The APRS protocol allows for broadcasting position updates to subscribers.</Description>
+    <Copyright>Copyright (C) Corstian Boerman 2017</Copyright>
+    <Version>1.1.0</Version>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>Boerman.AprsClient</PackageId>
+    <PackageVersion>1.2.0</PackageVersion>
+    <Owners>Corstian Boerman</Owners>
+    <Title>Boerman.AprsClient</Title>
+    <PackageProjectUrl>https://github.com/Boerman/Boerman.AprsClient</PackageProjectUrl>
+    <PackageReleaseNotes>This version had a namespace rename (APRS isn't really only usable in aviation).
+This version uses the updated .NET Standard 2.0 version of the Boerman.Networking library</PackageReleaseNotes>
+    <Summary>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Summary>
+    <PackageTags>aprs client tcp boerman library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Boerman.Core" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
+    <PackageReference Include="Boerman.Networking" Version="1.0.0" />
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.0" />
+  </ItemGroup>
+
+</Project>
