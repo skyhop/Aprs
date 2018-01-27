@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Boerman.AprsClient;
+using Boerman.AprsClient.Models;
 
 namespace AprsClientExample
 {
@@ -35,14 +36,34 @@ namespace AprsClientExample
             StreamWriter w = File.AppendText("positions.txt");
             w.AutoFlush = true;
 
-            listener.PacketReceived += (sender, eventArgs) =>
-            {
-                // Please note it is faster to use the `listener.DataReceived` event if you only want the raw data.
-                Console.Write(eventArgs.AprsMessage.RawData);
-                w.Write($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)} {eventArgs.AprsMessage.RawData}");
+            listener.DataReceived += (sender, e) => {
+                AprsMessage message = null;
+
+                try {
+                    message = PacketInfo.Parse(e.Data);
+                } catch (Exception ex) {
+                    
+                }
+
+                if (message == null) {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(e.Data);
+                    Console.ResetColor();
+                } else {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(e.Data);
+                    Console.ResetColor();
+                }
             };
 
-            await listener.Start();
+            //listener.PacketReceived += (sender, eventArgs) =>
+            //{
+            //    // Please note it is faster to use the `listener.DataReceived` event if you only want the raw data.
+            //    Console.WriteLine(eventArgs.AprsMessage.RawData);
+            //    w.Write($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)} {eventArgs.AprsMessage.RawData}");
+            //};
+
+            await listener.Open();
 
             Console.ReadKey();
 

@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Boerman.AprsClient.Models;
@@ -12,11 +13,14 @@ using Boerman.Networking;
 
 namespace Boerman.AprsClient
 {
+    // ToDo: Can we hide the underlying Open method?
     public class Listener : TcpClient
     {
         private Config _config;
         private bool _shouldBeConnected = false;
         private Timer _timer;
+
+        private StringBuilder stringBuffer = new StringBuilder();
 
         public Listener(Config config = null) : base() {
             _config = config ?? new Config();
@@ -30,7 +34,7 @@ namespace Boerman.AprsClient
 
             Disconnected += async (sender, e) => {
                 // Unless the disconnect method has been called, reconnect to the server
-                if (_shouldBeConnected) await Start();
+                if (_shouldBeConnected) await Open();
             };
 
             Received += Handle_Received;
@@ -39,15 +43,25 @@ namespace Boerman.AprsClient
         /// <summary>
         /// Connect to the APRS server
         /// </summary>
-        public async Task Start() {
+        public async Task<bool> Open() {
+            return await Open(new DnsEndPoint(_config.Uri, _config.Port));
+        }
+
+        /// <summary>
+        /// Connect to the APRS server
+        /// </summary>
+        public async Task<bool> Open(DnsEndPoint endpoint) {
             _shouldBeConnected = true;
 
             bool isConnected = false;
-            while (!isConnected) {
-                isConnected = await base.Open(new DnsEndPoint(_config.Uri, _config.Port));
+            while (!isConnected)
+            {
+                isConnected = await base.Open(endpoint);
             }
 
             _timer.Start();
+
+            return true;
         }
 
         /// <summary>
@@ -63,26 +77,53 @@ namespace Boerman.AprsClient
         {
             if (String.IsNullOrEmpty(e.Data)) return;
 
-            DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(e.Data));
+            string content;
+            string[] chunks;
+            bool endsWithNewLine;
 
-            if (PacketReceived == null) return;
-
-            AprsMessage packetInfo;
-
-            try
+            lock (stringBuffer)
             {
-                packetInfo = PacketInfo.Parse(e.Data);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceInformation(ex.ToString());
-                return;
+                stringBuffer.Append(e.Data);
+                content = stringBuffer.ToString();
+
+                // ToDo: Test this thing with multiple cultures. Maybe just fix the /r/n split?
+                endsWithNewLine = content.EndsWith(Environment.NewLine);
+
+                stringBuffer.Clear();
+
+                chunks = content.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Add the last part of previous message to the buffer
+                if (!endsWithNewLine) stringBuffer.Append(chunks.Length - 1);
             }
 
-            // Usually the case when the packet is corrupt or something like that.
-            if (packetInfo == null) return;
 
-            PacketReceived.Invoke(this, new PacketReceivedEventArgs(packetInfo));
+            var parts = chunks.Length - (endsWithNewLine ? 0 : 1);
+
+            for (int i = 0; i < parts; i++) {
+                string message = chunks[i];
+
+                DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(message));
+
+                if (PacketReceived == null) return;
+
+                AprsMessage packetInfo;
+
+                try
+                {
+                    packetInfo = PacketInfo.Parse(message);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceInformation(ex.ToString());
+                    return;
+                }
+
+                // Usually the case when the packet is corrupt or something like that.
+                if (packetInfo == null) return;
+
+                PacketReceived.Invoke(this, new PacketReceivedEventArgs(packetInfo));
+            }
         }
 
         public event EventHandler<PacketReceivedEventArgs> PacketReceived;
