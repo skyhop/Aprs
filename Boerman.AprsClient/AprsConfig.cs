@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
@@ -45,7 +46,14 @@ namespace Boerman.AprsClient
         public string Callsign
         {
             get { return callsign ?? AprsConfig.Callsign; }
-            set { callsign = value; }
+            set
+            {
+                if (!Helpers.CheckValiditiyAsCallsign(callsign)) {
+                    Trace.TraceWarning("Callsign could not be validated, see http://www.aprs-is.net/Connecting.aspx for more information");
+                }
+
+                callsign = value;
+            }
         }
 
         public string Password

@@ -97,7 +97,6 @@ namespace Boerman.AprsClient
                 if (!endsWithNewLine) stringBuffer.Append(chunks.Length - 1);
             }
 
-
             var parts = chunks.Length - (endsWithNewLine ? 0 : 1);
 
             for (int i = 0; i < parts; i++) {
