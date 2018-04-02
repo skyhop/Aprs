@@ -41,7 +41,7 @@ namespace AprsClientExample
 
                 try {
                     message = PacketInfo.Parse(e.Data);
-                } catch (Exception ex) {
+                } catch {
                     
                 }
 

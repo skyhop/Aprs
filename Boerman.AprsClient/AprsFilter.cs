@@ -59,7 +59,7 @@ namespace Boerman.AprsClient
             {
                 if (objects == null) return;
 
-                Result = "os";
+                Result = "o";
                 objects.ForEach(q => Result += $"/{q}");
             }
         }

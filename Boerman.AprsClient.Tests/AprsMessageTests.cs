@@ -115,6 +115,8 @@ ICA3D1062>APRS,qAS,EDLE:/103457h5052.01N/00618.03E'017/128/A=004569 !W53! id053D
                 var result = PacketInfo.Parse(line);
                 Console.WriteLine(result);
             }
+
+            // At least it didn't crash:wq
         }
     }
 }

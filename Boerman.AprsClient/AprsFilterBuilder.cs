@@ -27,7 +27,8 @@ namespace Boerman.AprsClient
             string result = "";
 
             _aprsFilters.ForEach(q => result += $"{q.Result} ");
-            result.Trim();
+
+            result = result.Trim();
 
             return result;
         }

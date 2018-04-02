@@ -9,11 +9,11 @@
     <Version>1.1.0</Version>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>Boerman.AprsClient</PackageId>
-    <PackageVersion>1.2.2</PackageVersion>
+    <PackageVersion>1.2.3</PackageVersion>
     <Owners>Corstian Boerman</Owners>
     <Title>Boerman.AprsClient</Title>
     <PackageProjectUrl>https://github.com/Boerman/Boerman.AprsClient</PackageProjectUrl>
-    <PackageReleaseNotes>This version adds an APRS filter builder for your convenience.</PackageReleaseNotes>
+    <PackageReleaseNotes>Minor bug fix in object filter</PackageReleaseNotes>
     <Summary>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Summary>
     <PackageTags>aprs client tcp boerman library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/25320889</PackageIconUrl>
