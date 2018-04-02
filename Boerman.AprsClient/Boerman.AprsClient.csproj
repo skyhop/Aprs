@@ -8,6 +8,7 @@
     <Copyright>Copyright (C) Corstian Boerman 2017</Copyright>
     <Version>1.1.0</Version>
     <PackOnBuild>true</PackOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Boerman.AprsClient</PackageId>
     <PackageVersion>1.2.3</PackageVersion>
     <Owners>Corstian Boerman</Owners>
@@ -22,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Boerman.Core" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
-    <PackageReference Include="Boerman.Networking" Version="1.0.0" />
+    <PackageReference Include="Boerman.Networking" Version="1.0.3" />
   </ItemGroup>
 
 </Project>
