@@ -21,7 +21,7 @@ namespace AprsClientExample
         {
             Console.Title = "APRS Client Example";
 
-            Listener listener = new Listener(new Config() {
+            Listener listener = new Listener(new Config {
                 Callsign = @"debugging",
                 Password = "",
                 Uri = "aprs.glidernet.org",

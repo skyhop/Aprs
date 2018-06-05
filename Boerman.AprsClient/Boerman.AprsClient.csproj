@@ -10,20 +10,20 @@
     <PackOnBuild>true</PackOnBuild>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Boerman.AprsClient</PackageId>
-    <PackageVersion>1.2.3</PackageVersion>
+    <PackageVersion>1.2.4</PackageVersion>
     <Owners>Corstian Boerman</Owners>
     <Title>Boerman.AprsClient</Title>
     <PackageProjectUrl>https://github.com/Boerman/Boerman.AprsClient</PackageProjectUrl>
-    <PackageReleaseNotes>Minor bug fix in object filter</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed bugs in parsing and validation.</PackageReleaseNotes>
     <Summary>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Summary>
     <PackageTags>aprs client tcp boerman library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/25320889</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Boerman.Core" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
-    <PackageReference Include="Boerman.Networking" Version="1.0.3" />
+    <PackageReference Include="Boerman.Networking" Version="1.1.1-beta2" />
+    <PackageReference Include="Boerman.Core" Version="2.0.2" />
   </ItemGroup>
 
 </Project>

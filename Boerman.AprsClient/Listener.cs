@@ -29,7 +29,7 @@ namespace Boerman.AprsClient
 
             // Assign some event listeners
             Connected += (sender, e) => {
-                Send($"user {_config.Callsign} pass {_config.Password} vers bocobrew filter {_config.Filter}\n");
+                Send($"user {_config.Callsign} pass {_config.Password} vers {_config.SoftwareName} {_config.SoftwareVersion} filter {_config.Filter}\n");
             };
 
             Disconnected += async (sender, e) => {
@@ -42,16 +42,25 @@ namespace Boerman.AprsClient
 
         /// <summary>
         /// Connect to the APRS server
+        /// 
+        /// The APRS client will automatically reconnect in case the connection is lost.
         /// </summary>
         public async Task<bool> Open() {
             return await Open(new DnsEndPoint(_config.Uri, _config.Port));
         }
 
         /// <summary>
-        /// Connect to the APRS server
+        /// Connect to the APRS server. By providing the endpoint to connect with you automatically override the configuration as supplied in the Config object.
+        /// 
+        /// The APRS client will automatically reconnect in case the connection is lost.
         /// </summary>
-        public async Task<bool> Open(DnsEndPoint endpoint) {
+        public async Task<bool> Open(EndPoint endpoint) {
             _shouldBeConnected = true;
+
+            if (!_config.ValidateConfiguration())
+            {
+                Trace.TraceWarning("Configuration validation resulted in one or more errors. See trace for more information.");
+            }
 
             bool isConnected = false;
             while (!isConnected)
@@ -65,7 +74,14 @@ namespace Boerman.AprsClient
         }
 
         /// <summary>
-        /// Close the connection to the server
+        /// Close the connection to the APRS server. Same as `Stop()`
+        /// </summary>
+        public new void Close() {
+            Stop();
+        }
+
+        /// <summary>
+        /// Close the connection to the APRS server. Same as `Close()`
         /// </summary>
         public void Stop() {
             _shouldBeConnected = false;
@@ -87,7 +103,7 @@ namespace Boerman.AprsClient
                 content = stringBuffer.ToString();
 
                 // ToDo: Test this thing with multiple cultures. Maybe just fix the /r/n split?
-                endsWithNewLine = content.EndsWith(Environment.NewLine);
+                endsWithNewLine = content.EndsWith(Environment.NewLine, StringComparison.Ordinal);
 
                 stringBuffer.Clear();
 
