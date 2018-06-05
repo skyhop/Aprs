@@ -10,7 +10,7 @@
     <PackOnBuild>true</PackOnBuild>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Boerman.AprsClient</PackageId>
-    <PackageVersion>1.2.4</PackageVersion>
+    <PackageVersion>1.2.5</PackageVersion>
     <Owners>Corstian Boerman</Owners>
     <Title>Boerman.AprsClient</Title>
     <PackageProjectUrl>https://github.com/Boerman/Boerman.AprsClient</PackageProjectUrl>

@@ -63,7 +63,7 @@ namespace Boerman.AprsClient
         }
 
         public string SoftwareName {
-            get { return SoftwareName ?? AprsConfig.SoftwareName; }
+            get { return softwareName ?? AprsConfig.SoftwareName; }
             set { softwareName = value; }
         }
 
