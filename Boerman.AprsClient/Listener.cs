@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
@@ -21,6 +22,22 @@ namespace Boerman.AprsClient
         private Timer _timer;
 
         private StringBuilder stringBuffer = new StringBuilder();
+        private ConcurrentQueue<string> _queue = new ConcurrentQueue<string>();
+
+        private readonly object _isRunningLock = new object();
+        private bool _isRunning;
+
+        private bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                lock (_isRunningLock)
+                {
+                    _isRunning = value;
+                }
+            }
+        }
 
         public Listener(Config config = null) : base() {
             _config = config ?? new Config();
@@ -29,7 +46,8 @@ namespace Boerman.AprsClient
 
             // Assign some event listeners
             Connected += (sender, e) => {
-                Send($"user {_config.Callsign} pass {_config.Password} vers {_config.SoftwareName} {_config.SoftwareVersion} filter {_config.Filter}\n");
+                Send($"user {_config.Callsign} pass {_config.Password} filter {_config.Filter}\n");
+                //vers {_config.SoftwareName} {_config.SoftwareVersion} 
             };
 
             Disconnected += async (sender, e) => {
@@ -91,36 +109,54 @@ namespace Boerman.AprsClient
 
         void Handle_Received(object sender, ReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data)) return;
+            _queue.Enqueue(e.Data);
+
+            ProcessString();
+        }
+
+        public event EventHandler<PacketReceivedEventArgs> PacketReceived;
+        public event EventHandler<AprsDataReceivedEventArgs> DataReceived;
+
+        private void ProcessString()
+        {
+            if (IsRunning) return;
+            IsRunning = true;
 
             string content;
             string[] chunks;
             bool endsWithNewLine;
 
-            lock (stringBuffer)
-            {
-                stringBuffer.Append(e.Data);
-                content = stringBuffer.ToString();
-
-                // ToDo: Test this thing with multiple cultures. Maybe just fix the /r/n split?
-                endsWithNewLine = content.EndsWith(Environment.NewLine, StringComparison.Ordinal);
-
-                stringBuffer.Clear();
-
-                chunks = content.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-                // Add the last part of previous message to the buffer
-                if (!endsWithNewLine) stringBuffer.Append(chunks.Length - 1);
+            while (!_queue.IsEmpty) {
+                _queue.TryDequeue(out string dequeue);
+                stringBuffer.Append(dequeue);
             }
+
+            content = stringBuffer.ToString();
+
+            // ToDo: Test this thing with multiple cultures. Maybe just fix the /r/n split?
+            endsWithNewLine = content.EndsWith(Environment.NewLine, StringComparison.Ordinal);
+
+            stringBuffer.Clear();
+
+            chunks = content.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Add the last part of previous message to the buffer
+            if (!endsWithNewLine) stringBuffer.Append(chunks.Length - 1);
 
             var parts = chunks.Length - (endsWithNewLine ? 0 : 1);
 
-            for (int i = 0; i < parts; i++) {
+            for (int i = 0; i < parts; i++)
+            {
                 string message = chunks[i];
 
-                DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(message));
+                try
+                {
+                    DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(message));
+                } catch {
+                    
+                }
 
-                if (PacketReceived == null) return;
+                if (PacketReceived == null) continue;
 
                 AprsMessage packetInfo;
 
@@ -135,13 +171,17 @@ namespace Boerman.AprsClient
                 }
 
                 // Usually the case when the packet is corrupt or something like that.
-                if (packetInfo == null) return;
+                if (packetInfo == null) continue;
 
-                PacketReceived.Invoke(this, new PacketReceivedEventArgs(packetInfo));
+                try
+                {
+                    PacketReceived.Invoke(this, new PacketReceivedEventArgs(packetInfo));
+                } catch {
+                    
+                }
             }
-        }
 
-        public event EventHandler<PacketReceivedEventArgs> PacketReceived;
-        public event EventHandler<AprsDataReceivedEventArgs> DataReceived;
+            IsRunning = false;
+        }
     }
 }

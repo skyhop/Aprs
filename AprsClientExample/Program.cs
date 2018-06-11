@@ -22,16 +22,16 @@ namespace AprsClientExample
             Console.Title = "APRS Client Example";
 
             Listener listener = new Listener(new Config {
-                Callsign = @"debugging",
-                Password = "",
+                Callsign = @"7CB0DBG",
+                Password = "-1",
                 Uri = "aprs.glidernet.org",
                 UseOgnAdditives = true,
-                Port = 10152
+                Port = 14580
             });
 
-            listener.Disconnected += (sender, e) => {
-                Console.WriteLine(" -- Disconnected");
-            };
+            //listener.Disconnected += (sender, e) => {
+            //    Console.WriteLine(" -- Disconnected");
+            //};
 
             StreamWriter w = File.AppendText("positions.txt");
             w.AutoFlush = true;
