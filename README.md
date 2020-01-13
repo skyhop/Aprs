@@ -1,4 +1,8 @@
-# Boerman.Aeronautics.AprsClient
+<a href="https://skyhop.org"><img src="https://app.skyhop.org/assets/images/skyhop.svg" width=200 alt="skyhop logo" /></a>
+
+----
+
+# AprsClient
 
 The AprsClient project contains everything to get started with APRS messages. This project is focused on working with APRS messages from Open Glider Net (known as OGN flavoured APRS).
 
