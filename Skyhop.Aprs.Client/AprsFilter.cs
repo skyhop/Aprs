@@ -1,7 +1,7 @@
 ﻿using System;
 using Boerman.Core.Extensions;
 
-namespace Boerman.AprsClient
+namespace Skyhop.Aprs.Client
 {
     public abstract class AprsFilter
     {
@@ -141,9 +141,9 @@ namespace Boerman.AprsClient
         {
             public Symbol(string primary, string alternate, string overlay)
             {
-                if (String.IsNullOrWhiteSpace(primary)
-                    || String.IsNullOrWhiteSpace(alternate)
-                    || String.IsNullOrWhiteSpace(overlay)) return;
+                if (string.IsNullOrWhiteSpace(primary)
+                    || string.IsNullOrWhiteSpace(alternate)
+                    || string.IsNullOrWhiteSpace(overlay)) return;
 
                 Result = $"s/{primary}/{alternate}/{overlay}";
             }
@@ -258,7 +258,7 @@ namespace Boerman.AprsClient
         {
             public FriendRange(string callsign, int distance)
             {
-                if (String.IsNullOrWhiteSpace(callsign) || distance == 0) return;
+                if (string.IsNullOrWhiteSpace(callsign) || distance == 0) return;
 
                 Result = $"f/{callsign}/{distance}";
             }

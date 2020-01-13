@@ -12,6 +12,6 @@
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Boerman.AprsClient\Boerman.AprsClient.csproj" />
+    <ProjectReference Include="..\Skyhop.Aprs.Client\Skyhop.Aprs.Client.csproj" />
   </ItemGroup>
 </Project>

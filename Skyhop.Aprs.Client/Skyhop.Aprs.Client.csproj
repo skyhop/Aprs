@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Corstian Boerman</Authors>
+    <Company>Skyhop</Company>
+    <Product />
+    <Copyright>Corstian Boerman</Copyright>
+    <PackageProjectUrl>https://github.com/Skyhop/Skyhop.Aprs</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Skyhop/Skyhop.Aprs</RepositoryUrl>
+    <PackageReleaseNotes>Updated dependencies for additional stability.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.2.8</Version>
+    <Description>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Description>
+    <PackageTags>aprs client tcp boerman library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Boerman.Networking" Version="1.1.3" />
+    <PackageReference Include="Boerman.Core" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Extensions.cs" />
+  </ItemGroup>
+</Project>

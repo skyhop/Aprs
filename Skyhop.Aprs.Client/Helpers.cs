@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Boerman.AprsClient
+namespace Skyhop.Aprs.Client
 {
     public static class Helpers
     {
-        public static bool VerifyCallsign(this string callsign) {
+        public static bool VerifyCallsign(this string callsign)
+        {
             // The callsign is validated by the following regex see 
             // http://www.aprs-is.net/Connecting.aspx for more info
 
@@ -14,11 +15,13 @@ namespace Boerman.AprsClient
             return match.Success;
         }
 
-        public static bool VerifyCallsignPasswordCombination(string callsign, string password) {
-            return VerifyCallsign(callsign) && VerifyPassword(callsign, password);
+        public static bool VerifyCallsignPasswordCombination(string callsign, string password)
+        {
+            return callsign.VerifyCallsign() && VerifyPassword(callsign, password);
         }
 
-        public static bool VerifyPassword(string callsign, string password) {
+        public static bool VerifyPassword(string callsign, string password)
+        {
             if (password == "-1") return true;
 
             return GeneratePassword(callsign).ToString() == password;
