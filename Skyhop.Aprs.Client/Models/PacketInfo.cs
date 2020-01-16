@@ -82,7 +82,21 @@ namespace Skyhop.Aprs.Client.Models
                         aprsMessage.Direction =
                             new Heading((short)((speedCourseSharedByte % 10 * 100 + (rawData[6] - 28)) % 400), 0, 0);
 
-                        aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[rawData[8]];
+                        {
+                            var symbolTableSelector = rawData[8];
+
+                            if (symbolTableSelector != '/'
+                                && symbolTableSelector != '\\')
+                            {
+                                aprsMessage.SymbolOverlay = symbolTableSelector;
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap['\\']; //Take the secondary table
+                            }
+                            else
+                            {
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[symbolTableSelector];
+                            }
+                        }
+
                         aprsMessage.Symbol =
                         (aprsMessage.SymbolTable == SymbolTable.Primary
                             ? Constants.Maps.PrimarySymbolTableSymbolMap
@@ -100,7 +114,22 @@ namespace Skyhop.Aprs.Client.Models
                         aprsMessage.Latitude = new Latitude(Convert.ToInt16(rawData.Substring(1, 2)),
                             Convert.ToDouble(rawData.Substring(3, 5)),
                             rawData[8] == 'N' ? LatitudeHemisphere.North : LatitudeHemisphere.South);
-                        aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[rawData[9]];
+
+                        {
+                            var symbolTableSelector = rawData[9];
+
+                            if (symbolTableSelector != '/'
+                                && symbolTableSelector != '\\')
+                            {
+                                aprsMessage.SymbolOverlay = symbolTableSelector;
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap['\\']; //Take the secondary table
+                            }
+                            else
+                            {
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[symbolTableSelector];
+                            }
+                        }
+
                         aprsMessage.Longitude = new Longitude(Convert.ToInt16(rawData.Substring(10, 3)),
                             Convert.ToDouble(rawData.Substring(13, 5)),
                             rawData[18] == 'E' ? LongitudeHemisphere.East : LongitudeHemisphere.West);

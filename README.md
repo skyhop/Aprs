@@ -4,7 +4,7 @@
 
 # AprsClient
 
-The AprsClient project contains everything to get started with APRS messages. This project is focused on working with APRS messages from Open Glider Net (known as OGN flavoured APRS).
+The Aprs project contains everything to get started to parse APRS messages. This project is focused on working with APRS messages from Open Glider Net (known as OGN flavoured APRS).
 
 This project has been kickstarted by the code found on [aprs.codeplex.com](aprs.codeplex.com). The following edits have been made:
 
@@ -16,9 +16,9 @@ This project has been kickstarted by the code found on [aprs.codeplex.com](aprs.
 
 ## Installing the library (NuGet)
 
-The library is available for download on [NuGet](https://www.nuget.org/packages/Boerman.Aeronautics.AprsClient):
+The library is available for download on [NuGet](https://www.nuget.org/packages/Skyhop.Aprs.Client):
 
-    Install-Package Boerman.Aeronautics.AprsClient
+    Install-Package Skyhop.Aprs.Client
 
 
 ## Configuring the library
@@ -36,7 +36,7 @@ Configuration of this library happens through a config file. Please create a fil
       }
     }
 
-For more information about the possible configuration check out [AprsConfig.cs](Boerman.Aeronautics.AprsClient/AprsConfig.cs).
+For more information about the possible configuration check out [AprsConfig.cs](Skyhop.Aprs.Client/AprsConfig.cs).
 
 
 ## Using the library
@@ -45,7 +45,7 @@ For more information about the possible configuration check out [AprsConfig.cs](
 
 To start listening for incoming APRS messages you can kickstart the library:
 
-    using Boerman.Aeronautics.AprsClient;
+    using Skyhop.Aprs.Client;
     ...
     new Listener().PacketReceived += (sender, eventArgs) =>
     {

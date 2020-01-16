@@ -1,4 +1,5 @@
 using System;
+using Boerman.Core.Spatial;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Skyhop.Aprs.Client.Models;
 
@@ -127,15 +128,38 @@ ICA3D1062>APRS,qAS,EDLE:/103457h5052.01N/00618.03E'017/128/A=004569 !W53! id053D
 
             var result = PacketInfo.Parse(data);
 
-            Console.WriteLine(result);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public void ParseMessageWithAlternativeSymbols()
         {
-            var data = "FLRDD4F25>APRS,qAS,LFRI:/103456h4642.08N\\00122.50W'281/050/A=000295 !W97! id0ADD4F25 -019fpm +0.1rot 36.0dB 0e +0.1kHz gps4x5";
+            var data = @"KB9VBR-N>APDG03,TCPIP*,qAC,T2INDIANA:!4456.70ND08937.08W&/A=000000440 MMDVM Voice 431.50000MHz +0.0000MHz, KB9VBR_Pi-Star
+KD9GCX-S>APDG01,TCPIP*,qAC,KD9GCX-GS:;KD9GCX B 160126z4415.63ND08817.60Wa/A=000010RNG0001 440 Voice 433.00000MHz +0.0000MHz
+WE9C0M-8>APN391,qAR,K9FR:!4541.60NS09120.85W#PHG6560 W3, In honor to Bill W9NNS
+KD9GCX-B>APDG02,TCPIP,qAC,KD9GCX-BS:!4415.63ND08817.60W&/A=000010RNG0001 440 Voice 433.00000MHz +0.0000MHz";
 
+            var messages = data.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
+            var first = PacketInfo.Parse(messages[0]);
+
+            Assert.AreEqual("KB9VBR-N", first.Callsign);
+            Assert.AreEqual(Enums.DataType.PositionWithoutTimestampNoAprsMessaging, first.DataType);
+            Assert.AreEqual(new Latitude(44, 56, 42, LatitudeHemisphere.North).ToString(), first.Latitude.ToString());
+            Assert.AreEqual(new Longitude(89, 37, 4.8, LongitudeHemisphere.West).ToString(), first.Longitude.ToString());
+            Assert.AreEqual(Enums.Symbol.HfGateway, first.Symbol);
+
+            var second = PacketInfo.Parse(messages[1]);
+
+            Assert.IsNotNull(second);
+
+            var third = PacketInfo.Parse(messages[2]);
+
+            Assert.IsNotNull(third);
+
+            var fourth = PacketInfo.Parse(messages[3]);
+
+            Assert.IsNotNull(fourth);
         }
     }
 }

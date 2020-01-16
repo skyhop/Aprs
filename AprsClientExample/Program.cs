@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using Boerman.AprsClient;
+using Skyhop.Aprs.Client;
 using Skyhop.Aprs.Client.Models;
 
 namespace AprsClientExample

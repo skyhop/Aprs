@@ -4,15 +4,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Corstian Boerman</Authors>
     <Company>Skyhop</Company>
-    <Product />
+    <Product>Skyhop.Aprs</Product>
     <Copyright>Corstian Boerman</Copyright>
-    <PackageProjectUrl>https://github.com/Skyhop/Skyhop.Aprs</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Skyhop/Skyhop.Aprs</RepositoryUrl>
-    <PackageReleaseNotes>Updated dependencies for additional stability.</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/Skyhop/Aprs</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Skyhop/Aprs</RepositoryUrl>
+    <PackageReleaseNotes>Fixed message parsing for alternative symbol tables</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.8</Version>
+    <Version>1.0.0-rc1</Version>
     <Description>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Description>
     <PackageTags>aprs client tcp boerman library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
+    <PackageId>Skyhop.Aprs.Client</PackageId>
     
   </PropertyGroup>
 
