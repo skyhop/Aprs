@@ -1,9 +1,8 @@
-﻿using Skyhop.Aprs.Client;
-using Skyhop.Aprs.Client.Models;
-using System;
-using System.Globalization;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Skyhop.Aprs.Client;
+using Skyhop.Aprs.Client.Models;
 
 namespace AprsClientExample
 {
