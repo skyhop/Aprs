@@ -10,7 +10,7 @@ namespace Boerman.AprsClient.Tests
         [TestMethod]
         public void TestFanetMessageParsing()
         {
-            var message = "FNT110C70>OGNFNT,qAS,Letzi:/151029h4703.62N/00827.16BEg347/011/A=004364 !W13! id1E110C70 +354fpm FNT11 18.3dB -10.6kHz";
+            var message = "FNT110C70>OGNFNT,qAS,Letzi:/151029h4703.62N/00827.16Eg347/011/A=004364 !W13! id1E110C70 +354fpm FNT11 18.3dB -10.6kHz";
 
             var result = PacketInfo.Parse(message);
 
