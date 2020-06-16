@@ -10,7 +10,7 @@ namespace Boerman.AprsClient.Tests
         [TestMethod]
         public void TestFanetMessageParsing()
         {
-            var message = "FNT110C70>OGNFNT,qAS,Letzi:/151029h4703.62N/00827.16Eg347/011/A=004364 !W13! id1E110C70 +354fpm FNT11 18.3dB -10.6kHz";
+            var message = "FNT110C70>OGNFNT,qAS,Letzi:/151029h4703.62N/00827.16BEg347/011/A=004364 !W13! id1E110C70 +354fpm FNT11 18.3dB -10.6kHz";
 
             var result = PacketInfo.Parse(message);
 
@@ -27,7 +27,7 @@ namespace Boerman.AprsClient.Tests
             Assert.IsTrue(result.StationRoute[0] == "OGNFNT");
             Assert.IsTrue(result.StationRoute[1] == "qAS");
             Assert.IsTrue(result.StationRoute[2] == "Letzi");
-            Assert.IsTrue(result.Symbol == null);
+            Assert.IsTrue(result.Symbol == Skyhop.AprsClient.Enums.Symbol.Glider);
             Assert.IsTrue(result.TurnRate == 0);
         }
 
