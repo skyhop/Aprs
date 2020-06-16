@@ -8,6 +8,16 @@ namespace Boerman.AprsClient.Tests
     public class AprsMessageTests
     {
         [TestMethod]
+        public void TestFanetMessageParsing()
+        {
+            var message = "FNT110C70>OGNFNT,qAS,Letzi:/151029h4703.62N/00827.16Eg347/011/A=004364 !W13! id1E110C70 +354fpm FNT11 18.3dB -10.6kHz";
+
+            var result = PacketInfo.Parse(message);
+
+            Assert.IsTrue(result != null);
+        }
+
+        [TestMethod]
         public void TestMultipleMessages()
         {
             string messages = @"# aprsc 2.1.2-gc90ee9c
