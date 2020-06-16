@@ -10,15 +10,15 @@
     <RepositoryUrl>https://github.com/skyhop/aprs</RepositoryUrl>
     <PackageReleaseNotes>Updated dependencies for additional stability.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0</Version>
+    <Version>1.0.0-rc2</Version>
     <Description>The APRS Client library is a library which will get you up and running in a snap when your goal is to read APRS feeds.</Description>
     <PackageTags>aprs client tcp library glider glidernet ogn openglidernet open net performant easy to use</PackageTags>
-    
+    <PackageId>Skyhop.Aprs.Client</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
-    <PackageReference Include="Boerman.Networking" Version="1.1.2" />
+    <PackageReference Include="Boerman.Networking" Version="1.1.3" />
     <PackageReference Include="Boerman.Core" Version="2.0.2" />
   </ItemGroup>
 

@@ -39,18 +39,21 @@ namespace Skyhop.Aprs.Client
             }
         }
 
-        public Listener(Config config = null) : base() {
+        public Listener(Config config = null) : base()
+        {
             _config = config ?? new Config();
             _timer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds);
             _timer.Elapsed += (sender, e) => Send("#");
 
             // Assign some event listeners
-            Connected += (sender, e) => {
+            Connected += (sender, e) =>
+            {
                 Send($"user {_config.Callsign} pass {_config.Password} filter {_config.Filter}\n");
                 //vers {_config.SoftwareName} {_config.SoftwareVersion} 
             };
 
-            Disconnected += async (sender, e) => {
+            Disconnected += async (sender, e) =>
+            {
                 // Unless the disconnect method has been called, reconnect to the server
                 if (_shouldBeConnected) await Open();
             };
@@ -63,7 +66,8 @@ namespace Skyhop.Aprs.Client
         /// 
         /// The APRS client will automatically reconnect in case the connection is lost.
         /// </summary>
-        public async Task<bool> Open() {
+        public async Task<bool> Open()
+        {
             return await Open(new DnsEndPoint(_config.Uri, _config.Port));
         }
 
@@ -72,7 +76,8 @@ namespace Skyhop.Aprs.Client
         /// 
         /// The APRS client will automatically reconnect in case the connection is lost.
         /// </summary>
-        public async Task<bool> Open(EndPoint endpoint) {
+        public async Task<bool> Open(EndPoint endpoint)
+        {
             _shouldBeConnected = true;
 
             if (!_config.ValidateConfiguration())
@@ -94,14 +99,16 @@ namespace Skyhop.Aprs.Client
         /// <summary>
         /// Close the connection to the APRS server. Same as `Stop()`
         /// </summary>
-        public new void Close() {
+        public new void Close()
+        {
             Stop();
         }
 
         /// <summary>
         /// Close the connection to the APRS server. Same as `Close()`
         /// </summary>
-        public void Stop() {
+        public void Stop()
+        {
             _shouldBeConnected = false;
             _timer.Stop();
             base.Close();
@@ -126,7 +133,8 @@ namespace Skyhop.Aprs.Client
             string[] chunks;
             bool endsWithNewLine;
 
-            while (!_queue.IsEmpty) {
+            while (!_queue.IsEmpty)
+            {
                 _queue.TryDequeue(out string dequeue);
                 stringBuffer.Append(dequeue);
             }
@@ -152,8 +160,10 @@ namespace Skyhop.Aprs.Client
                 try
                 {
                     DataReceived?.Invoke(this, new AprsDataReceivedEventArgs(message));
-                } catch {
-                    
+                }
+                catch
+                {
+
                 }
 
                 if (PacketReceived == null) continue;
@@ -176,8 +186,10 @@ namespace Skyhop.Aprs.Client
                 try
                 {
                     PacketReceived.Invoke(this, new PacketReceivedEventArgs(packetInfo));
-                } catch {
-                    
+                }
+                catch
+                {
+
                 }
             }
 

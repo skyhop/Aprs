@@ -1,4 +1,4 @@
-﻿using Skyhop.Aprs.Client;
+using Skyhop.Aprs.Client;
 using Skyhop.Aprs.Client.Models;
 using System;
 using System.Globalization;

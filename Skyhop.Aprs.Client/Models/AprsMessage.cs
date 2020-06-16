@@ -24,6 +24,7 @@ namespace Skyhop.Aprs.Client.Models
         public Speed Speed { get; internal set; }
         public SymbolTable SymbolTable { get; internal set; }
         public Symbol? Symbol { get; internal set; }
+        public char SymbolOverlay { get; internal set; }
         public MicEMessageType MicEMessageType { get; internal set; }
         public DateTime ReceivedDate { get; internal set; }
 
@@ -41,7 +42,7 @@ namespace Skyhop.Aprs.Client.Models
         {
             int padding = 17;
             var sb = new StringBuilder();
-            
+
             sb.AppendLine($"Packet Information Received {ReceivedDate} UTC");
             sb.AppendLine($"{(nameof(Callsign).SplitCamelCase().PadLeft(padding))}: {Callsign}");
             sb.AppendLine($"{(nameof(StationRoute).SplitCamelCase().PadLeft(padding))}: {string.Join(", ", StationRoute)}");
@@ -60,12 +61,12 @@ namespace Skyhop.Aprs.Client.Models
             return sb.ToString();
         }
     }
-    
+
     static class SplitCamelCaseExtension
     {
         public static string SplitCamelCase(this string str)
         {
-            return Regex.Replace( Regex.Replace( str, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2" ), @"(\p{Ll})(\P{Ll})", "$1 $2" );
+            return Regex.Replace(Regex.Replace(str, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2");
         }
     }
 }

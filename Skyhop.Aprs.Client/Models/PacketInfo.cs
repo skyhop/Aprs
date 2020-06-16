@@ -35,7 +35,7 @@ namespace Skyhop.Aprs.Client.Models
 
                 rawData = match.Groups[2].Value;
 
-                if (String.IsNullOrEmpty(rawData)) return null;
+                if (string.IsNullOrEmpty(rawData)) return null;
 
                 DataType dataType;
 
@@ -43,6 +43,8 @@ namespace Skyhop.Aprs.Client.Models
                     throw new ArgumentException("Unsupported data type in raw data", nameof(rawData));
 
                 aprsMessage.DataType = dataType;
+
+                Symbol symbol;
 
                 switch (aprsMessage.DataType)
                 {
@@ -62,7 +64,7 @@ namespace Skyhop.Aprs.Client.Models
                         aprsMessage.Latitude = latitude;
                         aprsMessage.MicEMessageType = micEMessageType;
 
-                        var longitudeDegrees = (short) (rawData[1] - 28 + longitudeOffset);
+                        var longitudeDegrees = (short)(rawData[1] - 28 + longitudeOffset);
                         if (180 <= longitudeDegrees && longitudeDegrees <= 189)
                             longitudeDegrees -= 80;
                         else if (190 <= longitudeDegrees && longitudeDegrees <= 199)
@@ -70,23 +72,43 @@ namespace Skyhop.Aprs.Client.Models
 
                         aprsMessage.Longitude = new Longitude(
                             longitudeDegrees,
-                            (short) ((rawData[2] - 28) % 60),
+                            (short)((rawData[2] - 28) % 60),
                             (rawData[3] - 28) * 0.6,
                             longitudeHemisphere,
                             latitude.Ambiguity);
 
-                        var speedCourseSharedByte = (rawData[5] - 28);
+                        var speedCourseSharedByte = rawData[5] - 28;
                         aprsMessage.Speed =
-                            Speed.FromKnots(((rawData[4] - 28) * 10 + (int) Math.Floor(speedCourseSharedByte / 10.0)) %
+                            Speed.FromKnots(((rawData[4] - 28) * 10 + (int)Math.Floor(speedCourseSharedByte / 10.0)) %
                                             800);
                         aprsMessage.Direction =
-                            new Heading((short) (((speedCourseSharedByte % 10 * 100) + (rawData[6] - 28)) % 400), 0, 0);
+                            new Heading((short)((speedCourseSharedByte % 10 * 100 + (rawData[6] - 28)) % 400), 0, 0);
 
-                        aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[rawData[8]];
-                        aprsMessage.Symbol =
-                        (aprsMessage.SymbolTable == SymbolTable.Primary
+                        {
+                            var symbolTableSelector = rawData[8];
+
+                            if (symbolTableSelector != '/'
+                                && symbolTableSelector != '\\')
+                            {
+                                aprsMessage.SymbolOverlay = symbolTableSelector;
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap['\\']; //Take the secondary table
+                            }
+                            else
+                            {
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[symbolTableSelector];
+                            }
+                        }
+
+                        if ((aprsMessage.SymbolTable == SymbolTable.Primary
                             ? Constants.Maps.PrimarySymbolTableSymbolMap
-                            : Constants.Maps.SecondarySymbolTableSymbolMap)[rawData[7]];
+                            : Constants.Maps.SecondarySymbolTableSymbolMap).TryGetValue(rawData[7], out symbol))
+                        {
+                            aprsMessage.Symbol = symbol;
+                        }
+                        else
+                        {
+                            aprsMessage.Symbol = null;
+                        }
 
                         if (rawData.Length > 12 && rawData[12] == '}')
                         {
@@ -100,14 +122,37 @@ namespace Skyhop.Aprs.Client.Models
                         aprsMessage.Latitude = new Latitude(Convert.ToInt16(rawData.Substring(1, 2)),
                             Convert.ToDouble(rawData.Substring(3, 5)),
                             rawData[8] == 'N' ? LatitudeHemisphere.North : LatitudeHemisphere.South);
-                        aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[rawData[9]];
+
+                        {
+                            var symbolTableSelector = rawData[9];
+
+                            if (symbolTableSelector != '/'
+                                && symbolTableSelector != '\\')
+                            {
+                                aprsMessage.SymbolOverlay = symbolTableSelector;
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap['\\']; //Take the secondary table
+                            }
+                            else
+                            {
+                                aprsMessage.SymbolTable = Constants.Maps.SymbolTableMap[symbolTableSelector];
+                            }
+                        }
+
                         aprsMessage.Longitude = new Longitude(Convert.ToInt16(rawData.Substring(10, 3)),
                             Convert.ToDouble(rawData.Substring(13, 5)),
                             rawData[18] == 'E' ? LongitudeHemisphere.East : LongitudeHemisphere.West);
-                        aprsMessage.Symbol =
-                        (aprsMessage.SymbolTable == SymbolTable.Primary
+
+                        if ((aprsMessage.SymbolTable == SymbolTable.Primary
                             ? Constants.Maps.PrimarySymbolTableSymbolMap
-                            : Constants.Maps.SecondarySymbolTableSymbolMap)[rawData[19]];
+                            : Constants.Maps.SecondarySymbolTableSymbolMap).TryGetValue(rawData[19], out symbol))
+                        {
+                            aprsMessage.Symbol = symbol;
+                        }
+                        else
+                        {
+                            aprsMessage.Symbol = null;
+                        }
+
                         rawData = rawData.Substring(20);
                         if (Regex.IsMatch(rawData, @"^\d\d\d\\\d\d\d"))
                         {
@@ -153,8 +198,6 @@ namespace Skyhop.Aprs.Client.Models
                             Convert.ToDouble(rawData.Substring(12, 5)),
                             rawData[17] == 'E' ? LongitudeHemisphere.East : LongitudeHemisphere.West);
 
-                        Symbol symbol;
-
                         if ((aprsMessage.SymbolTable == SymbolTable.Primary
                             ? Constants.Maps.PrimarySymbolTableSymbolMap
                             : Constants.Maps.SecondarySymbolTableSymbolMap).TryGetValue(rawData[18], out symbol))
@@ -167,6 +210,7 @@ namespace Skyhop.Aprs.Client.Models
 
                         short direction;
                         if (!Int16.TryParse(rawData.Substring(19, 3), out direction)) return null;
+
                         aprsMessage.Direction = new Heading(direction, 0, 0);
 
 
@@ -223,7 +267,7 @@ namespace Skyhop.Aprs.Client.Models
             var latitudeHemisphere = default(LatitudeHemisphere);
             //latitude = null;
             longitudeOffset = 0;
-            longitudeHemisphere = default(LongitudeHemisphere);
+            longitudeHemisphere = default;
             //micEMessageType = MicEMessageType.Unknown;
 
             for (var p = 0; p < 6; p++)

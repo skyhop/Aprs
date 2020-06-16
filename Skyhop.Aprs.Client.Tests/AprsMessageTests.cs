@@ -1,4 +1,5 @@
 using System;
+using Boerman.Core.Spatial;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Skyhop.Aprs.Client.Models;
 
@@ -135,12 +136,54 @@ FLRDDACA6>APRS,qAS,OMB:/103456h4937.83N/01059.51E'195/083/A=002982 !W39! id0ADDA
 FLRDDF944>OGFLR,qAS,VITACURA2:/103456h3322.78S/07034.83W'000/000/A=002227 !W85! id06DDF944 -019fpm +0.0rot 23.5dB 0e -3.5kHz gps3x5 s6.42 h05
 ICA3D1062>APRS,qAS,EDLE:/103457h5052.01N/00618.03E'017/128/A=004569 !W53! id053D1062 -712fpm +0.0rot 2.8dB 4e +1.4kHz gps1x1";
 
-            foreach (var line in messages.Split(new[] { Environment.NewLine }, StringSplitOptions.None)) {
+            foreach (var line in messages.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+            {
                 var result = PacketInfo.Parse(line);
                 Console.WriteLine(result);
             }
 
             // At least it didn't crash:wq
+        }
+
+        [TestMethod]
+        public void TestSouthernHemisphereMessage()
+        {
+            var data = "FLRDDFAD6>APRS,qAS,PoloCL:/103453h3322.80S/07035.00W'000/000/A=002266 !W64! id06DDFAD6 +020fpm +0.0rot 22.2dB 0e -2.5kHz gps4x7";
+
+            var result = PacketInfo.Parse(data);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ParseMessageWithAlternativeSymbols()
+        {
+            var data = @"KB9VBR-N>APDG03,TCPIP*,qAC,T2INDIANA:!4456.70ND08937.08W&/A=000000440 MMDVM Voice 431.50000MHz +0.0000MHz, KB9VBR_Pi-Star
+KD9GCX-S>APDG01,TCPIP*,qAC,KD9GCX-GS:;KD9GCX B 160126z4415.63ND08817.60Wa/A=000010RNG0001 440 Voice 433.00000MHz +0.0000MHz
+WE9C0M-8>APN391,qAR,K9FR:!4541.60NS09120.85W#PHG6560 W3, In honor to Bill W9NNS
+KD9GCX-B>APDG02,TCPIP,qAC,KD9GCX-BS:!4415.63ND08817.60W&/A=000010RNG0001 440 Voice 433.00000MHz +0.0000MHz";
+
+            var messages = data.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var first = PacketInfo.Parse(messages[0]);
+
+            Assert.AreEqual("KB9VBR-N", first.Callsign);
+            Assert.AreEqual(Skyhop.Aprs.Client.Enums.DataType.PositionWithoutTimestampNoAprsMessaging, first.DataType);
+            Assert.AreEqual(new Latitude(44, 56, 42, LatitudeHemisphere.North).ToString(), first.Latitude.ToString());
+            Assert.AreEqual(new Longitude(89, 37, 4.8, LongitudeHemisphere.West).ToString(), first.Longitude.ToString());
+            //Assert.AreEqual(Skyhop.Aprs.Client.Enums.Symbol.HfGateway, first.Symbol);
+
+            var second = PacketInfo.Parse(messages[1]);
+
+            Assert.IsNotNull(second);
+
+            var third = PacketInfo.Parse(messages[2]);
+
+            Assert.IsNotNull(third);
+
+            var fourth = PacketInfo.Parse(messages[3]);
+
+            Assert.IsNotNull(fourth);
         }
     }
 }
