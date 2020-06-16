@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
-namespace Skyhop.AprsClient
+namespace Skyhop.Aprs.Client
 {
     public static class AprsConfig
     {

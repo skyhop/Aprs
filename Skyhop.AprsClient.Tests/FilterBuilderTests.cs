@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Skyhop.AprsClient;
+using Skyhop.Aprs.Client;
 
-namespace Boerman.AprsClient.Tests
+namespace Boerman.Aprs.Client.Tests
 {
     [TestClass]
     public class FilterBuilderTests

@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Boerman.Networking;
-using Skyhop.AprsClient.Models;
+using Skyhop.Aprs.Client.Models;
 
-namespace Skyhop.AprsClient
+namespace Skyhop.Aprs.Client
 {
     // ToDo: Can we hide the underlying Open method?
     public class Listener : TcpClient

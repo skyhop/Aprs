@@ -1,8 +1,8 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Skyhop.AprsClient.Models;
+using Skyhop.Aprs.Client.Models;
 
-namespace Boerman.AprsClient.Tests
+namespace Boerman.Aprs.Client.Tests
 {
     [TestClass]
     public class AprsMessageTests
@@ -18,16 +18,16 @@ namespace Boerman.AprsClient.Tests
             Assert.IsTrue(result.Altitude.FeetAboveSeaLevel == 4364);
             Assert.IsTrue(result.Callsign == "FNT110C70");
             Assert.IsTrue(result.ClimbRate == 354);
-            Assert.IsTrue(result.DataType == Skyhop.AprsClient.Enums.DataType.PositionWithTimestampNoAprsMessaging);
+            Assert.IsTrue(result.DataType == Skyhop.Aprs.Client.Enums.DataType.PositionWithTimestampNoAprsMessaging);
             Assert.IsTrue(result.Direction.Degrees == 347);
             Assert.IsTrue(result.Latitude.AbsoluteValue == 47.060333333333332);
             Assert.IsTrue(result.Longitude.AbsoluteValue == 8.4526666666666657);
-            Assert.IsTrue(result.MicEMessageType == Skyhop.AprsClient.Enums.MicEMessageType.OffDuty);
+            Assert.IsTrue(result.MicEMessageType == Skyhop.Aprs.Client.Enums.MicEMessageType.OffDuty);
             Assert.IsTrue(result.Speed.Knots == 11);
             Assert.IsTrue(result.StationRoute[0] == "OGNFNT");
             Assert.IsTrue(result.StationRoute[1] == "qAS");
             Assert.IsTrue(result.StationRoute[2] == "Letzi");
-            Assert.IsTrue(result.Symbol == Skyhop.AprsClient.Enums.Symbol.Glider);
+            Assert.IsTrue(result.Symbol == Skyhop.Aprs.Client.Enums.Symbol.Glider);
             Assert.IsTrue(result.TurnRate == 0);
         }
 

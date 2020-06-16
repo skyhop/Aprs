@@ -1,5 +1,5 @@
-﻿using Skyhop.AprsClient;
-using Skyhop.AprsClient.Models;
+﻿using Skyhop.Aprs.Client;
+using Skyhop.Aprs.Client.Models;
 using System;
 using System.Globalization;
 using System.IO;

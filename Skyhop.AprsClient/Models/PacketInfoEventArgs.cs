@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skyhop.AprsClient.Models
+namespace Skyhop.Aprs.Client.Models
 {
     public class PacketReceivedEventArgs : EventArgs
     {

@@ -1,4 +1,4 @@
-﻿namespace Skyhop.AprsClient.Models
+﻿namespace Skyhop.Aprs.Client.Models
 {
     public class OgnAprsMessage : AprsMessage
     {

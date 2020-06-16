@@ -1,8 +1,8 @@
-﻿using Skyhop.AprsClient.Enums;
+﻿using Skyhop.Aprs.Client.Enums;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Skyhop.AprsClient
+namespace Skyhop.Aprs.Client
 {
     public static class Constants
     {

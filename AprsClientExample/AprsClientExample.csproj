@@ -12,6 +12,6 @@
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Skyhop.AprsClient\Skyhop.AprsClient.csproj" />
+    <ProjectReference Include="..\Skyhop.AprsClient\Skyhop.Aprs.Client.csproj" />
   </ItemGroup>
 </Project>

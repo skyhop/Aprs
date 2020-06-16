@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Boerman.Core.Spatial;
-using Skyhop.AprsClient.Enums;
+using Skyhop.Aprs.Client.Enums;
 
-namespace Skyhop.AprsClient.Models
+namespace Skyhop.Aprs.Client.Models
 {
     public static class PacketInfo
     {

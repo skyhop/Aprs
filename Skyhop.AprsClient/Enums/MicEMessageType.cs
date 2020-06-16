@@ -1,4 +1,4 @@
-﻿namespace Skyhop.AprsClient.Enums
+﻿namespace Skyhop.Aprs.Client.Enums
 {
     public enum MicEMessageType
     {
