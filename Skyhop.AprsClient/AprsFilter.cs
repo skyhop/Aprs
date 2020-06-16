@@ -1,7 +1,7 @@
 ﻿using System;
 using Boerman.Core.Extensions;
 
-namespace Boerman.AprsClient
+namespace Skyhop.AprsClient
 {
     public abstract class AprsFilter
     {

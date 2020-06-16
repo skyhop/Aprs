@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Boerman.AprsClient
+namespace Skyhop.AprsClient
 {
     public static class Helpers
     {

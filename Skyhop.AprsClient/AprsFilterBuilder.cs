@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Boerman.AprsClient
+namespace Skyhop.AprsClient
 {
     public class AprsFilterBuilder
     {
