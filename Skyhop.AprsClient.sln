@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skyhop.Aprs.Client", "Skyhop.AprsClient\Skyhop.Aprs.Client.csproj", "{239C1EC4-26CF-4393-8609-AC095FB04D76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skyhop.Aprs.Client", "Skyhop.Aprs.Client\Skyhop.Aprs.Client.csproj", "{239C1EC4-26CF-4393-8609-AC095FB04D76}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AprsClientExample", "AprsClientExample\AprsClientExample.csproj", "{A35CDB81-9579-4D70-8B7F-6412F2025539}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skyhop.Aprs.Client.Tests", "Skyhop.AprsClient.Tests\Skyhop.Aprs.Client.Tests.csproj", "{CE331010-10E7-401B-A7CA-39407E947059}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skyhop.Aprs.Client.Tests", "Skyhop.Aprs.Client.Tests\Skyhop.Aprs.Client.Tests.csproj", "{CE331010-10E7-401B-A7CA-39407E947059}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD74322D-944A-492E-9AA9-032EF9C7DB7E}"
 	ProjectSection(SolutionItems) = preProject
