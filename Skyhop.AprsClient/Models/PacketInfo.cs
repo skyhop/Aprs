@@ -154,13 +154,16 @@ namespace Skyhop.AprsClient.Models
                             rawData[17] == 'E' ? LongitudeHemisphere.East : LongitudeHemisphere.West);
 
                         Symbol symbol;
-                        if (
-                            !(aprsMessage.SymbolTable == SymbolTable.Primary
-                                ? Constants.Maps.PrimarySymbolTableSymbolMap
-                                : Constants.Maps.SecondarySymbolTableSymbolMap).TryGetValue(rawData[18], out symbol))
-                            return null;
 
-                        aprsMessage.Symbol = symbol;
+                        if ((aprsMessage.SymbolTable == SymbolTable.Primary
+                            ? Constants.Maps.PrimarySymbolTableSymbolMap
+                            : Constants.Maps.SecondarySymbolTableSymbolMap).TryGetValue(rawData[18], out symbol))
+                        {
+                            aprsMessage.Symbol = symbol;
+                        } else
+                        {
+                            aprsMessage.Symbol = null;
+                        }
 
                         short direction;
                         if (!Int16.TryParse(rawData.Substring(19, 3), out direction)) return null;

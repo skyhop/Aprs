@@ -23,7 +23,7 @@ namespace Skyhop.AprsClient.Models
         public Heading Direction { get; internal set; }
         public Speed Speed { get; internal set; }
         public SymbolTable SymbolTable { get; internal set; }
-        public Symbol Symbol { get; internal set; }
+        public Symbol? Symbol { get; internal set; }
         public MicEMessageType MicEMessageType { get; internal set; }
         public DateTime ReceivedDate { get; internal set; }
 
