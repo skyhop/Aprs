@@ -16,9 +16,9 @@ This project has been kickstarted by the code found on [aprs.codeplex.com](aprs.
 
 ## Installing the library (NuGet)
 
-The library is available for download on [NuGet](https://www.nuget.org/packages/Boerman.Aeronautics.AprsClient):
+The library is available for download on [NuGet](https://www.nuget.org/packages/Skyhop.AprsClient):
 
-    Install-Package Boerman.Aeronautics.AprsClient
+    Install-Package Skyhop.AprsClient
 
 
 ## Configuring the library
@@ -36,7 +36,7 @@ Configuration of this library happens through a config file. Please create a fil
       }
     }
 
-For more information about the possible configuration check out [AprsConfig.cs](Boerman.Aeronautics.AprsClient/AprsConfig.cs).
+For more information about the possible configuration check out [AprsConfig.cs](Skyhop.AprsClient/AprsConfig.cs).
 
 
 ## Using the library
@@ -45,7 +45,7 @@ For more information about the possible configuration check out [AprsConfig.cs](
 
 To start listening for incoming APRS messages you can kickstart the library:
 
-    using Boerman.Aeronautics.AprsClient;
+    using Skyhop.AprsClient;
     ...
     new Listener().PacketReceived += (sender, eventArgs) =>
     {
