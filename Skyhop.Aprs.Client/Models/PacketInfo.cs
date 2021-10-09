@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -36,6 +37,32 @@ namespace Skyhop.Aprs.Client.Models
                 rawData = match.Groups[2].Value;
 
                 if (string.IsNullOrEmpty(rawData)) return null;
+
+                // -- id bits and mask ----------------------------------------------------------------
+                // according: http://wiki.glidernet.org/wiki:subscribe-to-ogn-data
+                //       and: http://www.ediatec.ch/pdf/FLARM%20Data%20Port%20Specification%20v7.00.pdf
+                // idXXYYYYYY => XX encoding, YY address
+
+                try
+                {
+                    var matchAircraft = Regex.Match(rawData, @"(?:\sid)([a-fA-F0-9]{8})(?:\s)");
+
+                    if (matchAircraft.Success)
+                    {
+                        aprsMessage.DeviceId = matchAircraft.Groups[1].Value.Substring(2);
+                        var aircraftId = ulong.Parse(matchAircraft.Groups[1].Value.Trim(), NumberStyles.HexNumber);
+                        byte addressTypeAndFlagsByte = (byte)((aircraftId & 0xFF000000) >> 24);
+                        aprsMessage.AddressType = (AddressType)(addressTypeAndFlagsByte & 0x03);
+                        aprsMessage.AircraftType = (AircraftType)((addressTypeAndFlagsByte & 0x3C) >> 2);
+                        aprsMessage.StealthMode = (addressTypeAndFlagsByte & 0x80) > 0;
+                        aprsMessage.NoTrackingFlag = (addressTypeAndFlagsByte & 0x40) > 0;
+                        //uint aircraftAddress = (uint)(aircraftId & 0x00FFFFFF);
+                    }
+                }
+                catch (Exception ex)
+                {
+                        
+                }
 
                 DataType dataType;
 

@@ -1,6 +1,7 @@
 using System;
 using Boerman.Core.Spatial;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Skyhop.Aprs.Client.Enums;
 using Skyhop.Aprs.Client.Models;
 
 namespace Boerman.Aprs.Client.Tests
@@ -29,6 +30,81 @@ namespace Boerman.Aprs.Client.Tests
             Assert.IsTrue(result.StationRoute[1] == "qAS");
             Assert.IsTrue(result.StationRoute[2] == "Letzi");
             Assert.IsTrue(result.Symbol == Skyhop.Aprs.Client.Enums.Symbol.Glider);
+            Assert.IsTrue(result.TurnRate == 0);
+            Assert.AreEqual(AircraftType.Paraglider, result.AircraftType);
+        }
+
+        [TestMethod]
+        public void TestOGNGliderHB1669LszxMessageParsing()
+        {
+            var message = "ICA4B4B2C>APRS,qAS,LSZX:/090803h4710.41N/00902.63E'152/051/A=002129 !W18! id054B4B2C -138fpm -1.6rot 24.0dB 0e -1.8kHz gps2x2";
+
+            var result = PacketInfo.Parse(message);
+
+            Assert.IsTrue(result != null);
+            Assert.IsTrue(result.Altitude.FeetAboveSeaLevel == 2129);
+            Assert.IsTrue(result.Callsign == "ICA4B4B2C");
+            Assert.IsTrue(result.ClimbRate == -138);
+            Assert.IsTrue(result.DataType == Skyhop.Aprs.Client.Enums.DataType.PositionWithTimestampNoAprsMessaging);
+            Assert.IsTrue(result.Direction.Degrees == 152);
+            Assert.IsTrue(result.Latitude.AbsoluteValue == 47.1735);
+            Assert.IsTrue(result.Longitude.AbsoluteValue == 9.0438333333333336);
+            Assert.IsTrue(result.MicEMessageType == Skyhop.Aprs.Client.Enums.MicEMessageType.OffDuty);
+            Assert.IsTrue(result.Speed.Knots == 51);
+            Assert.IsTrue(result.StationRoute[0] == "APRS");
+            Assert.IsTrue(result.StationRoute[1] == "qAS");
+            Assert.IsTrue(result.StationRoute[2] == "LSZX");
+            Assert.IsTrue(result.Symbol == Skyhop.Aprs.Client.Enums.Symbol.Aircraft);
+            Assert.IsTrue(result.TurnRate == -1.6);
+            Assert.AreEqual(AircraftType.Glider, result.AircraftType);
+        }
+
+        [TestMethod]
+        public void TestOGNTowAircraftHBEXPLszxMessageParsing()
+        {
+            var message = "ICA4B0CF5>APRS,qAS,LSZX:/091131h4710.19N/00902.42E'149/007/A=001355 !W74! id094B0CF5 +020fpm +0.4rot 42.2dB 0e -3.4kHz gps3x3";
+
+            var result = PacketInfo.Parse(message);
+
+            Assert.IsTrue(result != null);
+            Assert.IsTrue(result.Altitude.FeetAboveSeaLevel == 1355);
+            Assert.IsTrue(result.Callsign == "ICA4B0CF5");
+            Assert.IsTrue(result.ClimbRate == 20);
+            Assert.IsTrue(result.DataType == Skyhop.Aprs.Client.Enums.DataType.PositionWithTimestampNoAprsMessaging);
+            Assert.IsTrue(result.Direction.Degrees == 149);
+            Assert.IsTrue(result.Latitude.AbsoluteValue == 47.16983333333333);
+            Assert.IsTrue(result.Longitude.AbsoluteValue == 9.0403333333333329);
+            Assert.IsTrue(result.MicEMessageType == Skyhop.Aprs.Client.Enums.MicEMessageType.OffDuty);
+            Assert.IsTrue(result.Speed.Knots == 7);
+            Assert.IsTrue(result.StationRoute[0] == "APRS");
+            Assert.IsTrue(result.StationRoute[1] == "qAS");
+            Assert.IsTrue(result.StationRoute[2] == "LSZX");
+            Assert.IsTrue(result.Symbol == Skyhop.Aprs.Client.Enums.Symbol.Aircraft);
+            Assert.IsTrue(result.TurnRate == 0.4);
+            Assert.AreEqual(AircraftType.TowPlane, result.AircraftType);
+        }
+
+        [TestMethod]
+        public void TestOGNFLRMessageParsing()
+        {
+            var message = "ICA4B3CA5>APRS,qAS,LSZX:/165008h4711.09N/00847.94E'054/079/A=004402 !W59! id054B3CA5 -157fpm +0.0rot 13.8dB 0e -1.9kHz gps1x2 +5.3dBm";
+
+            var result = PacketInfo.Parse(message);
+
+            Assert.IsTrue(result != null);
+            Assert.IsTrue(result.Altitude.FeetAboveSeaLevel == 4402);
+            Assert.IsTrue(result.Callsign == "ICA4B3CA5");
+            Assert.IsTrue(result.ClimbRate == -157);
+            Assert.IsTrue(result.DataType == Skyhop.Aprs.Client.Enums.DataType.PositionWithTimestampNoAprsMessaging);
+            Assert.IsTrue(result.Direction.Degrees == 54);
+            Assert.IsTrue(result.Latitude.AbsoluteValue == 47.18483333333333);
+            Assert.IsTrue(result.Longitude.AbsoluteValue == 8.799);
+            Assert.IsTrue(result.MicEMessageType == Skyhop.Aprs.Client.Enums.MicEMessageType.OffDuty);
+            Assert.IsTrue(result.Speed.Knots == 79);
+            Assert.IsTrue(result.StationRoute[0] == "APRS");
+            Assert.IsTrue(result.StationRoute[1] == "qAS");
+            Assert.IsTrue(result.StationRoute[2] == "LSZX");
+            Assert.IsTrue(result.Symbol == Skyhop.Aprs.Client.Enums.Symbol.Aircraft);
             Assert.IsTrue(result.TurnRate == 0);
         }
 

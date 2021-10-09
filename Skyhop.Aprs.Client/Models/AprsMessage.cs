@@ -28,6 +28,16 @@ namespace Skyhop.Aprs.Client.Models
         public MicEMessageType MicEMessageType { get; internal set; }
         public DateTime ReceivedDate { get; internal set; }
 
+        public string DeviceId { get; internal set; }
+
+        public AircraftType AircraftType { get; internal set; }
+
+        public AddressType AddressType { get; internal set; }
+
+        public bool StealthMode { get; internal set; }
+
+        public bool NoTrackingFlag { get; internal set; }
+
         // This is specifically for OGN flavored APRS
         public int ClimbRate { get; internal set; }
         public double TurnRate { get; internal set; }
@@ -54,6 +64,9 @@ namespace Skyhop.Aprs.Client.Models
             sb.AppendLine($"{(nameof(Speed).SplitCamelCase().PadLeft(padding))}: {Speed}");
             sb.AppendLine($"{(nameof(SymbolTable).SplitCamelCase().PadLeft(padding))}: {SymbolTable}");
             sb.AppendLine($"{(nameof(Symbol).SplitCamelCase().PadLeft(padding))}: {Symbol}");
+            sb.AppendLine($"{(nameof(DeviceId).SplitCamelCase().PadLeft(padding))}: {DeviceId}");
+            sb.AppendLine($"{(nameof(AircraftType).SplitCamelCase().PadLeft(padding))}: {AircraftType}");
+            sb.AppendLine($"{(nameof(AddressType).SplitCamelCase().PadLeft(padding))}: {AddressType}");
 
             if (DataType == DataType.CurrentMicE)
                 sb.AppendLine($"{(nameof(MicEMessageType).SplitCamelCase().PadLeft(padding))}: {MicEMessageType}");
