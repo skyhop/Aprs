@@ -59,7 +59,7 @@ namespace Skyhop.Aprs.Client.Models
                         //uint aircraftAddress = (uint)(aircraftId & 0x00FFFFFF);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                         
                 }
